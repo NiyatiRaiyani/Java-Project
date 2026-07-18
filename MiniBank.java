@@ -129,8 +129,8 @@ public class MiniBank {
             BankInfo bank = new BankInfo("BARODA Bank", "GONDAL");
             
             Customer c1 = new Customer("Niyati", "niyati@gmail.com", "9876543210");
-            Customer c2 = new Customer("Raj", "raj@gmail.com", "9988776655");
-            Customer c3 = new Customer("Priya", "priya@gmail.com", "9123456789");
+            Customer c2 = new Customer("Vishva", "vishva@gmail.com", "9988776655");
+            Customer c3 = new Customer("Mahi", "mahi@gmail.com", "9123456789");
             
             Account[] accounts = new Account[3];
             
@@ -158,7 +158,7 @@ public class MiniBank {
                 System.out.println("--------------------------------");
                 System.out.println("Account No : " + acc.getAccountNumber());
                 System.out.println("Owner      : " + acc.getOwnerName());
-                System.out.println("Balance    : ₹" + acc.getBalance());
+                System.out.println("Balance    : " + acc.getBalance());
                 System.out.println("Active     : " + acc.isActive());
             }
         }
