@@ -1,38 +1,37 @@
-import java.util.Scanner;
+import java.util.Objects;
 
 record BankInfo(String name, String branch) {}
 
-enum MenuOption {
-    OPEN_ACCOUNT,
-    DEPOSIT,
-    WITHDRAW,
-    TRANSFER,
-    EXIT
-}
-
 // Customer Class
-class Customer {
+class Customer implements Cloneable {
 
-    private String name;
-    private String email;
-    private String mobile;
+    private String name, email, mobile;
     private final String customerId;
+    private Address address;
 
-    private static long customerCounter = 101;
+    private static int id = 101;
 
-    private static String generateCustomerId() {
-        return "CUST" + customerCounter++;
+    public Customer(Address address, String customerId) {
+        this.address = address;
+        this.customerId = customerId;
     }
 
-    public Customer(String name, String email, String mobile) {
-        this.name = name;
+    public Customer(String customerId, String email, String mobile, String name) {
+        this.customerId = customerId;
         this.email = email;
         this.mobile = mobile;
-        this.customerId = generateCustomerId();
+        this.name = name;
     }
 
-    public String getName() {
-        return name;
+    public Customer(String customerId, String email) {
+        this.customerId = customerId;
+        this.email = email;
+    }
+
+    public Customer(Address address, String customerId, String name) {
+        this.address = address;
+        this.customerId = customerId;
+        this.name = name;
     }
 
     public String getEmail() {
@@ -46,6 +45,51 @@ class Customer {
     public String getCustomerId() {
         return customerId;
     }
+
+    // Static Nested Class
+    public static class Address {
+        private String line, city, pincode;
+
+        public Address(String line, String city, String pincode) {
+            this.line = line;
+            this.city = city;
+            this.pincode = pincode;
+        }
+
+        public String getLine() { return line; }
+        public String getCity() { return city; }
+        public String getPincode() { return pincode; }
+
+        @Override
+        public String toString() {
+            return line + ", " + city + " - " + pincode;
+        }
+    }
+
+    public Customer(String name, String email, String mobile, Address address) {
+        this.name = name;
+        this.email = email;
+        this.mobile = mobile;
+        this.address = address;
+        this.customerId = "CUST" + id++;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    @Override
+    public Customer clone() throws CloneNotSupportedException {
+        try {
+            return (Customer) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
 }
 
 // Account Class
@@ -54,113 +98,116 @@ class Account {
     private final String accountNumber;
     private String ownerName;
     private long balance;
-    private boolean active;
+    private boolean active = true;
 
-    private static int accountCounter = 1;
+    private static int count = 1;
 
-    private static String generateAccountNumber() {
-        return String.format("AC%04d", accountCounter++);
-    }
-
-    public Account(String ownerName, long openingBalance) {
-        this.accountNumber = generateAccountNumber();
+    public Account(String ownerName, long balance) {
+        this.accountNumber = String.format("AC%04d", count++);
         this.ownerName = ownerName;
-        this.balance = openingBalance;
-        this.active = true;
+        this.balance = balance;
     }
 
     public Account(String ownerName) {
         this(ownerName, 0);
     }
 
-    public void deposit(long amount) {
-        if (amount < 0) {
-            System.out.println("Invalid Deposit Amount");
-            return;
-        }
-        balance += amount;
+    public void deposit(long amt) {
+        if (amt > 0)
+            balance += amt;
     }
 
-    public boolean withdraw(long amount) {
-        if (amount < 0) {
-            System.out.println("Invalid Withdraw Amount");
+    public void withdraw(long amt) {
+        if (amt > 0 && balance >= amt)
+            balance -= amt;
+    }
+
+    public static void transfer(Account a1, Account a2, long amt) {
+        if (a1.balance >= amt) {
+            a1.withdraw(amt);
+            a2.deposit(amt);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return accountNumber + " | " + ownerName +
+                " | Balance: " + balance +
+                " | Active: " + active;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof Account))
             return false;
-        }
-
-        if (balance >= amount) {
-            balance -= amount;
-            return true;
-        }
-
-        return false;
+        Account a = (Account) obj;
+        return accountNumber.equals(a.accountNumber);
     }
 
-    public static boolean transfer(Account from, Account to, long amount) {
-        if (from.withdraw(amount)) {
-            to.deposit(amount);
-            return true;
-        }
-        return false;
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountNumber);
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public String getOwnerName() {
-        return ownerName;
-    }
-
-    public long getBalance() {
-        return balance;
+    public String getStatement() {
+        return """
+        -----------------------
+        Account : %s
+        Owner   : %s
+        Balance : %d
+        Active  : %b
+        -----------------------
+        """.formatted(accountNumber, ownerName, balance, active);
     }
 
     public boolean isActive() {
         return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
 
 // Main Class
 public class MiniBank {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
 
-        try (Scanner _ = new Scanner(System.in)) {
-            BankInfo bank = new BankInfo("BARODA Bank", "GONDAL");
-            
-            Customer c1 = new Customer("Niyati", "niyati@gmail.com", "9876543210");
-            Customer c2 = new Customer("Vishva", "vishva@gmail.com", "9988776655");
-            Customer c3 = new Customer("Mahi", "mahi@gmail.com", "9123456789");
-            
-            Account[] accounts = new Account[3];
-            
-            accounts[0] = new Account(c1.getName(), 5000);
-            accounts[1] = new Account(c2.getName());
-            accounts[2] = new Account(c3.getName(), 10000);
-            
-            accounts[0].deposit(1000);
-            accounts[1].deposit(3000);
-            
-            accounts[0].withdraw(2000);
-            accounts[2].withdraw(1500);
-            
-            Account.transfer(accounts[1], accounts[2], 500);
-            
-            System.out.println("=================================");
-            System.out.println("          MINI BANK");
-            System.out.println("=================================");
-            System.out.println("Bank Name : " + bank.name());
-            System.out.println("Branch    : " + bank.branch());
-            
-            System.out.println("\nAccount Details:");
-            
-            for (Account acc : accounts) {
-                System.out.println("--------------------------------");
-                System.out.println("Account No : " + acc.getAccountNumber());
-                System.out.println("Owner      : " + acc.getOwnerName());
-                System.out.println("Balance    : " + acc.getBalance());
-                System.out.println("Active     : " + acc.isActive());
-            }
-        }
+        BankInfo bank = new BankInfo("BARODA Bank", "GONDAL");
+
+        Customer c1 = new Customer("Niyati", "niyati@gmail.com", "9876543210",
+                new Customer.Address("Rajkot Road", "Gondal", "360311"));
+
+        Customer c2 = new Customer("Vishva", "vishva@gmail.com", "9988776655",
+                new Customer.Address("Yagnik Road", "Rajkot", "360001"));
+
+        Account a1 = new Account(c1.getName(), 5000);
+        Account a2 = new Account(c2.getName(), 3000);
+
+        a1.deposit(1000);
+        a2.withdraw(500);
+        Account.transfer(a1, a2, 1000);
+
+        System.out.println("===== MINI BANK =====");
+        System.out.println(bank.name() + " - " + bank.branch());
+
+        System.out.println("\nAccounts:");
+        System.out.println(a1);
+        System.out.println(a2);
+
+        System.out.println("\nStatement:");
+        System.out.println(a1.getStatement());
+
+        System.out.println("a1.equals(a1) : " + a1.equals(a1));
+
+        Object obj = a1;
+        System.out.println("instanceof Account : " + (obj instanceof Account));
+
+        Customer copy = c1.clone();
+        System.out.println("\nOriginal : " + c1.getName() + " - " + c1.getAddress());
+        System.out.println("Clone    : " + copy.getName() + " - " + copy.getAddress());
     }
 }
