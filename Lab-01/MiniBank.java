@@ -18,15 +18,39 @@ public class MiniBank {
 
         BankInfo bank = new BankInfo("BARODA Bank", "GONDAL");
 
+        // Creating 3 Accounts
+        Account[] accounts = new Account[3];
+
+        accounts[0] = new Account("Niyati", 5000);
+        accounts[1] = new Account("Priya");
+        accounts[2] = new Account("Krina", 10000);
+
+        // Transactions
+        accounts[0].deposit(2000);
+        accounts[1].deposit(3000);
+
+        accounts[0].withdraw(1000);
+        accounts[2].withdraw(5000);
+
+        // Display Accounts
         System.out.println("=================================");
-        System.out.println("        MINI BANK           ");
+        System.out.println("        MINI BANK");
         System.out.println("=================================");
         System.out.println("Bank Name : " + bank.name());
         System.out.println("Branch    : " + bank.branch());
 
+        System.out.println("\n----- Account Details -----");
+
+        for (Account acc : accounts) {
+            System.out.println("Account Number : " + acc.getAccountNumber());
+            System.out.println("Owner Name     : " + acc.getOwnerName());
+            System.out.println("Balance        : " + acc.getBalance());
+            System.out.println();
+        }
+
         while (true) {
 
-            System.out.println("\n========== MENU ==========");
+            System.out.println("========== MENU ==========");
             System.out.println("1. Open Account");
             System.out.println("2. Deposit");
             System.out.println("3. Withdraw");
