@@ -19,7 +19,7 @@ public class MiniBank {
         BankInfo bank = new BankInfo("BARODA Bank", "GONDAL");
 
         System.out.println("=================================");
-        System.out.println("        MINI BANK");
+        System.out.println("        MINI BANK           ");
         System.out.println("=================================");
         System.out.println("Bank Name : " + bank.name());
         System.out.println("Branch    : " + bank.branch());
