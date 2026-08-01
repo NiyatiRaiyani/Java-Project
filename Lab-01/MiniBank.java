@@ -28,29 +28,56 @@ public class MiniBank {
         // Transactions
         accounts[0].deposit(2000);
         accounts[1].deposit(3000);
-
         accounts[0].withdraw(1000);
         accounts[2].withdraw(5000);
 
-        // Display Accounts
         System.out.println("=================================");
-        System.out.println("        MINI BANK");
+        System.out.println("          MINI BANK");
         System.out.println("=================================");
         System.out.println("Bank Name : " + bank.name());
         System.out.println("Branch    : " + bank.branch());
 
         System.out.println("\n----- Account Details -----");
 
+        // Week 3: Print using toString()
         for (Account acc : accounts) {
-            System.out.println("Account Number : " + acc.getAccountNumber());
-            System.out.println("Owner Name     : " + acc.getOwnerName());
-            System.out.println("Balance        : " + acc.getBalance());
-            System.out.println();
+            System.out.println(acc);
         }
+
+        // Week 3: equals()
+        System.out.println("\nComparing Accounts");
+        System.out.println("accounts[0].equals(accounts[1]) : "
+                + accounts[0].equals(accounts[1]));
+
+        // Week 3: instanceof
+        Object obj = accounts[0];
+
+        if (obj instanceof Account) {
+            System.out.println("obj is an Account object.");
+        }
+
+        // Week 3: Customer and Address
+        Customer.Address address =
+                new Customer.Address("Main Road", "Rajkot", "360001");
+
+        Customer customer =
+                new Customer("Niyati",
+                        "niyati42@gmail.com",
+                        "9876543210",
+                        address);
+
+        Customer copy = customer.clone();
+
+        System.out.println("\nCustomer Details");
+        System.out.println("Customer ID : " + copy.getCustomerId());
+        System.out.println("Name        : " + copy.getName());
+        System.out.println("Email       : " + copy.getEmail());
+        System.out.println("Mobile      : " + copy.getMobile());
+        System.out.println("City        : " + copy.getAddress().getCity());
 
         while (true) {
 
-            System.out.println("========== MENU ==========");
+            System.out.println("\n========== MENU ==========");
             System.out.println("1. Open Account");
             System.out.println("2. Deposit");
             System.out.println("3. Withdraw");
