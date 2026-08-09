@@ -32,7 +32,7 @@ public class MiniBank
             // Practical 3: Creating Address
             Customer.Address address = new Customer.Address(
                     "College Road",
-                    "Anand",
+                    "Gondal",
                     "388001"
             );
 

@@ -11,7 +11,7 @@ public class Account {
 
     private static String generateAccountNumber() {
         accountCounter++;
-        return String.format("AC%02d", accountCounter);
+        return String.format("AC%03d", accountCounter);
     }
 
     public Account(String ownerName, long openingBalance) {
@@ -61,7 +61,7 @@ public class Account {
     public String toString() {
         return "Account Number: " + accountNumber
                 + ", Owner: " + ownerName
-                + ", Balance: ₹" + balance;
+                + ", Balance: " + balance;
     }
 
     // Practical 3: equals()
