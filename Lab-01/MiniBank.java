@@ -17,7 +17,7 @@ public class MiniBank {
 
         Scanner sc = new Scanner(System.in);
 
-        BankInfo bank = new BankInfo("MiniBank", "CHARUSAT Branch");
+        BankInfo bank = new BankInfo("Baroda", "College Chowk Branch");
 
         System.out.println("==================================");
         System.out.println("             MINIBANK");
