@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
-record BankInfo(String name, String branch) 
-{
+record BankInfo(String name, String branch) {
 }
 
 enum MenuOption {
@@ -12,17 +11,18 @@ enum MenuOption {
     EXIT
 }
 
-public class MiniBank 
-{
+public class MiniBank {
 
     public static void main(String[] args) throws CloneNotSupportedException {
 
-        try (Scanner sc = new Scanner(System.in)) 
-        {
+        try (Scanner sc = new Scanner(System.in)) {
 
-            BankInfo bank = new BankInfo("Baroda", "College Chowk Branch");
+            BankInfo bank = new BankInfo(
+                    "Baroda",
+                    "College Chowk Branch"
+            );
 
-            // Practical 2: Creating Customers
+            // Practical 2: Creating Customer
             Customer customer1 = new Customer(
                     "Niyati Raiyani",
                     "niyati9856@gmail.com",
@@ -39,9 +39,19 @@ public class MiniBank
             customer1.setAddress(address);
 
             // Practical 2: Creating Accounts
-            Account account1 = new Account("Niyati Raiyani", 5000);
-            Account account2 = new Account("Dhanvi Patel");
-            Account account3 = new Account("Krina Sorathiya", 10000);
+            Account account1 = new Account(
+                    "Niyati Raiyani",
+                    5000
+            );
+
+            Account account2 = new Account(
+                    "Dhanvi Patel"
+            );
+
+            Account account3 = new Account(
+                    "Krina Sorathiya",
+                    10000
+            );
 
             // Practical 2: Transactions
             account1.deposit(2000);
@@ -55,20 +65,29 @@ public class MiniBank
             System.out.println("Bank Name : " + bank.name());
             System.out.println("Branch    : " + bank.branch());
 
+            // Customer Details
             System.out.println("\nCustomer Details");
             System.out.println("----------------------------------");
-            System.out.println("Customer ID : " + customer1.getCustomerId());
-            System.out.println("Name        : " + customer1.getName());
-            System.out.println("Email       : " + customer1.getEmail());
-            System.out.println("Mobile      : " + customer1.getMobile());
+            System.out.println("Customer ID : "
+                    + customer1.getCustomerId());
+            System.out.println("Name        : "
+                    + customer1.getName());
+            System.out.println("Email       : "
+                    + customer1.getEmail());
+            System.out.println("Mobile      : "
+                    + customer1.getMobile());
 
             // Practical 3: Address Details
             System.out.println("\nAddress Details");
             System.out.println("----------------------------------");
-            System.out.println("Address : " + customer1.getAddress().getLine());
-            System.out.println("City    : " + customer1.getAddress().getCity());
-            System.out.println("Pincode : " + customer1.getAddress().getPincode());
+            System.out.println("Address : "
+                    + customer1.getAddress().getLine());
+            System.out.println("City    : "
+                    + customer1.getAddress().getCity());
+            System.out.println("Pincode : "
+                    + customer1.getAddress().getPincode());
 
+            // Account Details
             System.out.println("\nAccount Details");
             System.out.println("----------------------------------");
 
@@ -93,7 +112,7 @@ public class MiniBank
                     + (account1 instanceof Account));
 
             // Practical 3: clone()
-            Customer clonedCustomer = (Customer) customer1.clone();
+            Customer clonedCustomer = customer1.clone();
 
             System.out.println("\nClone Details");
             System.out.println("----------------------------------");
@@ -102,7 +121,75 @@ public class MiniBank
             System.out.println("Cloned Customer   : "
                     + clonedCustomer.getName());
 
+            // ==========================================
+            // Practical 4: Validator Testing
+            // ==========================================
+
+            System.out.println("\nValidator Testing");
+            System.out.println("----------------------------------");
+
+            System.out.println("Valid Mobile   : "
+                    + Validator.isValidMobile("9876543210"));
+
+            System.out.println("Invalid Mobile : "
+                    + Validator.isValidMobile("12345"));
+
+            System.out.println("Valid Email    : "
+                    + Validator.isValidEmail(
+                            "niyati9856@gmail.com"
+                    ));
+
+            System.out.println("Invalid Email  : "
+                    + Validator.isValidEmail(
+                            "niyati@"
+                    ));
+
+            System.out.println("Valid PAN      : "
+                    + Validator.isValidPan("ABCDE1234F"));
+
+            System.out.println("Invalid PAN    : "
+                    + Validator.isValidPan("ABC123"));
+
+            System.out.println("Valid IFSC     : "
+                    + Validator.isValidIfsc("BARB0COLLEG"));
+
+            System.out.println("Invalid IFSC   : "
+                    + Validator.isValidIfsc("BAR123"));
+
+            // ==========================================
+            // Practical 4: Command Parser
+            // ==========================================
+
+            System.out.println("\nCommand Parser Testing");
+            System.out.println("----------------------------------");
+
+            String input = "DEPOSIT AC0001 500";
+
+            Command command = CommandParser.parse(input);
+
+            System.out.println("Input Command   : " + input);
+            System.out.println("Transaction Type: "
+                    + command.type());
+            System.out.println("Account Number  : "
+                    + command.accountNumber());
+            System.out.println("Amount          : "
+                    + command.amount());
+
+            // ==========================================
+            // Practical 4: Statement Formatter
+            // ==========================================
+
+            System.out.println("\nAccount Statement");
+            System.out.println("----------------------------------");
+
+            System.out.println(
+                    StatementFormatter.buildStatement(account1)
+            );
+
+            // ==========================================
             // Existing Practical 1 Menu
+            // ==========================================
+
             boolean running = true;
 
             while (running) {
@@ -121,26 +208,44 @@ public class MiniBank
                 MenuOption option;
 
                 switch (choice) {
-                    case 1 -> option = MenuOption.OPEN_ACCOUNT;
-                    case 2 -> option = MenuOption.DEPOSIT;
-                    case 3 -> option = MenuOption.WITHDRAW;
-                    case 4 -> option = MenuOption.TRANSFER;
-                    case 5 -> option = MenuOption.EXIT;
+
+                    case 1 ->
+                        option = MenuOption.OPEN_ACCOUNT;
+
+                    case 2 ->
+                        option = MenuOption.DEPOSIT;
+
+                    case 3 ->
+                        option = MenuOption.WITHDRAW;
+
+                    case 4 ->
+                        option = MenuOption.TRANSFER;
+
+                    case 5 ->
+                        option = MenuOption.EXIT;
+
                     default -> {
-                        System.out.println("Invalid choice. Please try again.");
+                        System.out.println(
+                                "Invalid choice. Please try again."
+                        );
                         continue;
                     }
                 }
 
                 String message = switch (option) {
+
                     case OPEN_ACCOUNT ->
                         "Open Account - To be implemented in a later lab.";
+
                     case DEPOSIT ->
                         "Deposit - To be implemented in a later lab.";
+
                     case WITHDRAW ->
                         "Withdraw - To be implemented in a later lab.";
+
                     case TRANSFER ->
                         "Transfer - To be implemented in a later lab.";
+
                     case EXIT -> {
                         running = false;
                         yield "Thank you for using MiniBank.";
