@@ -78,10 +78,14 @@ public class Customer implements Cloneable {
         public String getPincode() {
             return pincode;
         }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
     }
 
     @Override
-    public Customer clone() {
+    public Customer clone() throws CloneNotSupportedException {
 
         try {
             return (Customer) super.clone();

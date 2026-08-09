@@ -15,7 +15,7 @@ enum MenuOption {
 public class MiniBank 
 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
 
         try (Scanner sc = new Scanner(System.in)) 
         {
