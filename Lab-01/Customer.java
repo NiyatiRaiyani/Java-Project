@@ -20,6 +20,18 @@ public class Customer {
         this.mobile = mobile;
     }
 
+    public Customer(String customerId, String email, String mobile, String name) {
+        this.customerId = customerId;
+        this.email = email;
+        this.mobile = mobile;
+        this.name = name;
+    }
+
+    public Customer(String customerId, String email) {
+        this.customerId = customerId;
+        this.email = email;
+    }
+
     public String getCustomerId() {
         return customerId;
     }
@@ -34,5 +46,9 @@ public class Customer {
 
     public String getMobile() {
         return mobile;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
