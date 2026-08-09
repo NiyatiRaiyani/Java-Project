@@ -88,4 +88,12 @@ public class Account {
     public int hashCode() {
         return Objects.hash(accountNumber);
     }
+    @Override
+    public Customer clone() {
+    try {
+        return (Customer) super.clone();
+    } catch (CloneNotSupportedException e) {
+        return null;
+    }
+}
 }
