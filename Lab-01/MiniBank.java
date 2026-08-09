@@ -34,7 +34,7 @@ public class MiniBank {
 
         // Practical 2: Creating Accounts
         Account account1 = new Account("Niyati Raiyani", 5000);
-        Account account2 = new Account("Priya Patel");
+        Account account2 = new Account("Dhanvi Patel");
         Account account3 = new Account("Krina Sorathiya", 10000);
 
         // Practical 2: Transactions
@@ -61,21 +61,21 @@ public class MiniBank {
 
         System.out.println("Account No. : " + account1.getAccountNumber());
         System.out.println("Owner       : " + account1.getOwnerName());
-        System.out.println("Balance     : ₹" + account1.getBalance());
+        System.out.println("Balance     : " + account1.getBalance());
         System.out.println("Active      : " + account1.isActive());
 
         System.out.println();
 
         System.out.println("Account No. : " + account2.getAccountNumber());
         System.out.println("Owner       : " + account2.getOwnerName());
-        System.out.println("Balance     : ₹" + account2.getBalance());
+        System.out.println("Balance     : " + account2.getBalance());
         System.out.println("Active      : " + account2.isActive());
 
         System.out.println();
 
         System.out.println("Account No. : " + account3.getAccountNumber());
         System.out.println("Owner       : " + account3.getOwnerName());
-        System.out.println("Balance     : ₹" + account3.getBalance());
+        System.out.println("Balance     : " + account3.getBalance());
         System.out.println("Active      : " + account3.isActive());
 
         System.out.println("\nWithdrawal Status : "
