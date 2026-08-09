@@ -1,4 +1,4 @@
-public class Customer {
+public class Customer implements Cloneable {
 
     private String name;
     private String email;
@@ -7,6 +7,8 @@ public class Customer {
     private final String customerId;
 
     private static long customerCounter = 100;
+
+    private Address address;
 
     private static String generateCustomerId() {
         customerCounter++;
@@ -20,16 +22,9 @@ public class Customer {
         this.mobile = mobile;
     }
 
-    public Customer(String customerId, String email, String mobile, String name) {
+    public Customer(Address address, String customerId) {
+        this.address = address;
         this.customerId = customerId;
-        this.email = email;
-        this.mobile = mobile;
-        this.name = name;
-    }
-
-    public Customer(String customerId, String email) {
-        this.customerId = customerId;
-        this.email = email;
     }
 
     public String getCustomerId() {
@@ -48,7 +43,50 @@ public class Customer {
         return mobile;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public static class Address {
+
+        private String line;
+        private String city;
+        private String pincode;
+
+        public Address(String line, String city, String pincode) {
+            this.line = line;
+            this.city = city;
+            this.pincode = pincode;
+        }
+
+        public Address(String city) {
+            this.city = city;
+        }
+
+        public String getLine() {
+            return line;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public String getPincode() {
+            return pincode;
+        }
+    }
+
+    @Override
+    public Customer clone() {
+
+        try {
+            return (Customer) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

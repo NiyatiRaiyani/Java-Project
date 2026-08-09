@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Account {
 
     private final String accountNumber;
@@ -9,7 +11,7 @@ public class Account {
 
     private static String generateAccountNumber() {
         accountCounter++;
-        return String.format("AC%04d", accountCounter);
+        return String.format("AC%02d", accountCounter);
     }
 
     public Account(String ownerName, long openingBalance) {
@@ -52,5 +54,36 @@ public class Account {
 
     public boolean isActive() {
         return active;
+    }
+
+    // Practical 3: toString()
+    @Override
+    public String toString() {
+        return "Account Number: " + accountNumber
+                + ", Owner: " + ownerName
+                + ", Balance: ₹" + balance;
+    }
+
+    // Practical 3: equals()
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Account)) {
+            return false;
+        }
+
+        Account other = (Account) o;
+
+        return accountNumber.equals(other.accountNumber);
+    }
+
+    // Practical 3: hashCode()
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountNumber);
     }
 }

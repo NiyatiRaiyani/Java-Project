@@ -93,7 +93,7 @@ public class MiniBank
                     + (account1 instanceof Account));
 
             // Practical 3: clone()
-            Customer clonedCustomer = customer1.clone();
+            Customer clonedCustomer = (Customer) customer1.clone();
 
             System.out.println("\nClone Details");
             System.out.println("----------------------------------");
