@@ -234,7 +234,7 @@ public class MiniBank {
                     );
 
                     System.out.println(
-                            "Minimum Balance : ₹"
+                            "Minimum Balance : "
                                     + savings.getMinBalance()
                     );
                 }
