@@ -24,4 +24,8 @@ public class SavingsAccount extends Account {
     public long getMinBalance() {
         return minBalance;
     }
+
+    public void setMinBalance(long minBalance) {
+        this.minBalance = minBalance;
+    }
 }

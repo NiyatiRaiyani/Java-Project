@@ -38,20 +38,29 @@ public class MiniBank {
 
             customer1.setAddress(address);
 
-            // Practical 2: Creating Accounts
-            Account account1 = new Account(
-                    "Niyati Raiyani",
-                    5000
-            );
+            // ==========================================
+            // Practical 5: Creating Different Account Types
+            // ==========================================
 
-            Account account2 = new Account(
-                    "Dhanvi Patel"
-            );
+            SavingsAccount account1 =
+                    new SavingsAccount(
+                            "Niyati Raiyani",
+                            5000,
+                            2000
+                    );
 
-            Account account3 = new Account(
-                    "Krina Sorathiya",
-                    10000
-            );
+            CurrentAccount account2 =
+                    new CurrentAccount(
+                            "Dhanvi Patel",
+                            0,
+                            3000
+                    );
+
+            FixedDepositAccount account3 =
+                    new FixedDepositAccount(
+                            "Krina Sorathiya",
+                            10000
+                    );
 
             // Practical 2: Transactions
             account1.deposit(2000);
@@ -163,16 +172,16 @@ public class MiniBank {
             System.out.println("\nCommand Parser Testing");
             System.out.println("----------------------------------");
 
-            String input = "DEPOSIT AC0001 500";
+            String input = "DEPOSIT AC001 500";
 
             Command command = CommandParser.parse(input);
 
-            System.out.println("Input Command   : " + input);
-            System.out.println("Transaction Type: "
+            System.out.println("Input Command    : " + input);
+            System.out.println("Transaction Type : "
                     + command.type());
-            System.out.println("Account Number  : "
+            System.out.println("Account Number   : "
                     + command.accountNumber());
-            System.out.println("Amount          : "
+            System.out.println("Amount           : "
                     + command.amount());
 
             // ==========================================
@@ -184,6 +193,73 @@ public class MiniBank {
 
             System.out.println(
                     StatementFormatter.buildStatement(account1)
+            );
+
+            // ==========================================
+            // Practical 5: Polymorphism
+            // ==========================================
+
+            Account[] accounts = {
+                account1,
+                account2,
+                account3
+            };
+
+            System.out.println("\nPolymorphism - Interest Rates");
+            System.out.println("----------------------------------");
+
+            for (Account account : accounts) {
+
+                System.out.println(
+                        account.getClass().getSimpleName()
+                                + " : "
+                                + account.interestRate()
+                                + "%"
+                );
+            }
+
+            // ==========================================
+            // Practical 5: Pattern instanceof
+            // ==========================================
+
+            System.out.println("\nPattern instanceof Check");
+            System.out.println("----------------------------------");
+
+            for (Account account : accounts) {
+
+                if (account instanceof SavingsAccount savings) {
+
+                    System.out.println(
+                            "Savings Account detected."
+                    );
+
+                    System.out.println(
+                            "Minimum Balance : ₹"
+                                    + savings.getMinBalance()
+                    );
+                }
+            }
+
+            // ==========================================
+            // Practical 5: Withdrawal Rules
+            // ==========================================
+
+            System.out.println("\nAccount Withdrawal Rules");
+            System.out.println("----------------------------------");
+
+            System.out.println(
+                    "Savings Account Withdrawal : "
+                            + account1.withdraw(3000)
+            );
+
+            System.out.println(
+                    "Current Account Withdrawal : "
+                            + account2.withdraw(5000)
+            );
+
+            System.out.println(
+                    "Fixed Deposit Withdrawal   : "
+                            + account3.withdraw(1000)
             );
 
             // ==========================================

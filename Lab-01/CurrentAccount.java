@@ -11,6 +11,11 @@ public class CurrentAccount extends Account {
         this.overdraftLimit = overdraftLimit;
     }
 
+    public CurrentAccount(long overdraftLimit, String ownerName) {
+        super(ownerName);
+        this.overdraftLimit = overdraftLimit;
+    }
+
     @Override
     public double interestRate() {
         return 0.0;
@@ -23,5 +28,9 @@ public class CurrentAccount extends Account {
 
     public long getOverdraftLimit() {
         return overdraftLimit;
+    }
+
+    public void setOverdraftLimit(long overdraftLimit) {
+        this.overdraftLimit = overdraftLimit;
     }
 }
