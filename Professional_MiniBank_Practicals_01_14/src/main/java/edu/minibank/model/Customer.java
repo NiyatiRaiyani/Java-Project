@@ -23,7 +23,8 @@ public class Customer implements Cloneable, Serializable {
     public String getEmail() { return email; }
     public String getMobile() { return mobile; }
     public Address getAddress() { return address; }
-    @Override public Customer clone() {
+    @Override@SuppressWarnings("CloneDeclaresCloneNotSupported")
+ public Customer clone() {
         return new Customer(name, email, mobile, address == null ? null : new Address(address.line(), address.city(), address.pincode()));
     }
     public record Address(String line, String city, String pincode) implements Serializable {}

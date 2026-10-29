@@ -1,18 +1,20 @@
 package edu.minibank;
 
-import edu.minibank.model.*;
-import edu.minibank.service.BankService;
-import edu.minibank.util.*;
-import edu.minibank.exception.BankException;
-
 import java.nio.file.Path;
 import java.util.Scanner;
+
+import edu.minibank.exception.BankException;
+import edu.minibank.model.Account;
+import edu.minibank.model.BankInfo;
+import edu.minibank.model.MenuOption;
+import edu.minibank.service.BankService;
 
 public class MiniBank {
     private static final BankInfo BANK = new BankInfo("Professional MiniBank", "Rajkot Main Branch");
     private static final Path DATA_FILE = Path.of("data", "accounts.dat");
     private static final Path LOG_FILE = Path.of("data", "transactions.log");
 
+    @SuppressWarnings("UseSpecificCatch")
     public static void main(String[] args) {
         System.out.println("======================================");
         System.out.println(BANK.name() + " | " + BANK.branch());
